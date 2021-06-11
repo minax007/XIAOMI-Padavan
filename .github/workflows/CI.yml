@@ -1,4 +1,4 @@
-name: CI
+name: Build Padavan for Xiaomi routers
 
 # Controls when the action will run. 
 on: 
@@ -11,6 +11,7 @@ env:
   images_dir: /opt/images
   ENABLED_CFG: |
     CONFIG_FIRMWARE_INCLUDE_TCPDUMP
+  DISABLED_CFG: |
     CONFIG_FIRMWARE_INCLUDE_SCUTCLIENT
     CONFIG_FIRMWARE_INCLUDE_GDUT_DRCOM
     CONFIG_FIRMWARE_INCLUDE_DOGCOM
@@ -22,7 +23,6 @@ env:
     CONFIG_FIRMWARE_INCLUDE_HTOP
     CONFIG_FIRMWARE_INCLUDE_NANO
     CONFIG_FIRMWARE_INCLUDE_MENTOHUST
-  DISABLED_CFG: |
     CONFIG_FIRMWARE_INCLUDE_SHADOWSOCKS
     CONFIG_FIRMWARE_INCLUDE_SSSERVER
     CONFIG_FIRMWARE_INCLUDE_SOFTETHERVPN_SERVER
@@ -81,23 +81,52 @@ jobs:
           for n in $ENABLED_CFG; do sed -i "/${n}/c${n}=y" $m.config; done; \
           for n in $DISABLED_CFG; do sed -i "/${n}/c${n}=n" $m.config; done; \
           fi; done
+  #____________________________________________________________________________________________________________________________        
       - name: Start build
         run: |
           cd $build_dir/trunk
           for m in $targets; do fakeroot ./build_firmware_ci $m; \
           if [ $? = 0 ]; then cp -f images/*.trx $images_dir/$m.trx; else exit 1; fi; \
           ./clear_tree_simple >/dev/null 2>&1; done
-      - name: Create archive
-        if: ${{ success() }}
-        run: |
-          echo -e "Build Date: ${build_date}\n" >> ${images_dir}/ReleaseNote.txt
-          cd $build_dir && git log -1 |tee -a ${images_dir}/ReleaseNote.txt
-          cd $images_dir
-          for m in $targets; do zip ${m}_${image_suffix}.zip $m.trx ReleaseNote.txt; done
-          7z a -mx=9 ${image_name}.7z *.zip
-      - name: Upload images to Artifact
-        if: ${{ success() }}
-        uses: actions/upload-artifact@v2.2.1
-        with:
-          name: ${{ env.image_name }}
-          path: ${{ env.images_dir }}/${{ env.image_name }}.7z
+  #____________________________________________________________________________________________________________________________
+  #    - name: Create archive
+  #      if: ${{ success() }}
+  #      run: |
+  #        echo -e "Build Date: ${build_date}\n" >> ${images_dir}/ReleaseNote.txt
+  #        cd $build_dir && git log -1 |tee -a ${images_dir}/ReleaseNote.txt
+  #        cd $images_dir
+  #        for m in $targets; do zip ${m}_${image_suffix}.zip $m.trx ReleaseNote.txt; done
+  #        7z a -mx=9 ${image_name}.7z *.zip
+          
+  #    - name: Upload images to Artifact
+  #      if: ${{ success() }}
+  #      uses: actions/upload-artifact@v2.2.1
+  #      with:
+  #        name: ${{ env.image_name }}
+  #        path: ${{ env.images_dir }}/${{ env.image_name }}.7z
+
+  #____________________________________________________________________________________________________________________________
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${build_date}
+        release_name: Padavan R2100 (${build_date})
+        body: |
+          Build Date: ${build_date}\n                    
+        draft: false
+        prerelease: false
+
+    - name: Upload type1 Asset
+      id: upload-release-asset-type1
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+        asset_path: $images_dir/R2100.trx
+        asset_name: R2100_${build_date}.trx
+        asset_content_type: application/bin
