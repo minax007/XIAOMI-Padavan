@@ -168,7 +168,6 @@ jobs:
           ./clear_tree_simple >/dev/null 2>&1; done
           
       - name: Create Release
-        if: ${{ success() }}
         id: create_release
         uses: actions/create-release@v1
         env:
@@ -182,26 +181,24 @@ jobs:
           prerelease: false
 
       - name: Upload type1 Asset
-        if: ${{ success() }}
         id: upload-release-asset-type1
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: /opt/images/R2100.trx
           asset_name: R2100_${{ env.build_date }}.trx
           asset_content_type: application/bin
         
 
       - name: Upload type2 Asset
-        if: ${{ success() }}
         id: upload-release-asset-type2
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          upload_url: ${{ steps.create_release.outputs.upload_url }} 
           asset_path: /opt/images/MI-3C.trx
           asset_name: MI-3C_${{ env.build_date }}.trx
           asset_content_type: application/bin
