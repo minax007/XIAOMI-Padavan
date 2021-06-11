@@ -174,9 +174,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ env.build_date }}
-          release_name: Padavan for Xiaomi routers (${{ env.build_date }})
+          release_name: Padavan for Xiaomi (${{ env.build_date }})
           body: |
-            Build Date: ${{ env.build_date }}                    
+            Build Date: ${{ env.build_date }}
           draft: false
           prerelease: false
 
