@@ -124,8 +124,8 @@ jobs:
     strategy:
       matrix:
         include:
-  #        - build_variant: "mt7628"
-  #          targets: "MI-3C"
+          - build_variant: "mt7628"
+            targets: "MI-3C"
           - build_variant: "mt7621"
             targets: "R2100"
     steps:
@@ -174,7 +174,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ env.build_date }}
-          release_name: Padavan R2100 (${{ env.build_date }})
+          release_name: Padavan for Xiaomi routers (${{ env.build_date }})
           body: |
             Build Date: ${{ env.build_date }}                    
           draft: false
@@ -191,3 +191,14 @@ jobs:
           asset_name: R2100_${{ env.build_date }}.trx
           asset_content_type: application/bin
         
+
+      - name: Upload type2 Asset
+        id: upload-release-asset-type2
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: /opt/images/MI-3C.trx
+          asset_name: MI-3C_${{ env.build_date }}.trx
+          asset_content_type: application/bin
