@@ -2,16 +2,23 @@ name: Build Padavan for Xiaomi routers
 
 # Controls when the action will run. 
 on:
+  schedule:
+    - cron: "0 2 * * *"
   push:
+    branches:
+      - master
   workflow_dispatch:
-
+  
 env:
-  src_git: https://github.com/minax007/rt-n56u.git
+  src_git: https://github.com/hanwckf/rt-n56u.git
   build_dir: /opt/rt-n56u
   images_dir: /opt/images
   ENABLED_CFG: |
-    CONFIG_FIRMWARE_INCLUDE_TCPDUMP
+    CONFIG_FIRMWARE_INCLUDE_LANG_UK
   DISABLED_CFG: |
+    CONFIG_FIRMWARE_INCLUDE_LANG_CN
+    CONFIG_FIRMWARE_INCLUDE_IPSET
+    CONFIG_FIRMWARE_INCLUDE_TCPDUMP
     CONFIG_FIRMWARE_INCLUDE_SCUTCLIENT
     CONFIG_FIRMWARE_INCLUDE_GDUT_DRCOM
     CONFIG_FIRMWARE_INCLUDE_DOGCOM
@@ -113,21 +120,3 @@ jobs:
           asset_name: R2100_${{ env.build_date }}.trx
           asset_content_type: application/bin
         
-          
-          
-          
-  #    - name: Create archive
-  #      if: ${{ success() }}
-  #      run: |
-  #        echo -e "Build Date: ${build_date}\n" >> ${images_dir}/ReleaseNote.txt
-  #        cd $build_dir && git log -1 |tee -a ${images_dir}/ReleaseNote.txt
-  #        cd $images_dir
-  #        for m in $targets; do zip ${m}_${image_suffix}.zip $m.trx ReleaseNote.txt; done
-  #        7z a -mx=9 ${image_name}.7z *.zip
-          
-  #    - name: Upload images to Artifact
-  #      if: ${{ success() }}
-  #      uses: actions/upload-artifact@v2.2.1
-  #      with:
-  #        name: ${{ env.image_name }}
-  #        path: ${{ env.images_dir }}/${{ env.image_name }}.7z
