@@ -89,23 +89,6 @@ jobs:
           if [ $? = 0 ]; then cp -f images/*.trx $images_dir/$m.trx; else exit 1; fi; \
           ./clear_tree_simple >/dev/null 2>&1; done
           
-  #    - name: Create archive
-  #      if: ${{ success() }}
-  #      run: |
-  #        echo -e "Build Date: ${build_date}\n" >> ${images_dir}/ReleaseNote.txt
-  #        cd $build_dir && git log -1 |tee -a ${images_dir}/ReleaseNote.txt
-  #        cd $images_dir
-  #        for m in $targets; do zip ${m}_${image_suffix}.zip $m.trx ReleaseNote.txt; done
-  #        7z a -mx=9 ${image_name}.7z *.zip
-          
-  #    - name: Upload images to Artifact
-  #      if: ${{ success() }}
-  #      uses: actions/upload-artifact@v2.2.1
-  #      with:
-  #        name: ${{ env.image_name }}
-  #        path: ${{ env.images_dir }}/${{ env.image_name }}.7z
-
-
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -129,3 +112,22 @@ jobs:
         asset_path: $images_dir/R2100.trx
         asset_name: R2100_${build_date}.trx
         asset_content_type: application/bin
+        
+          
+          
+          
+  #    - name: Create archive
+  #      if: ${{ success() }}
+  #      run: |
+  #        echo -e "Build Date: ${build_date}\n" >> ${images_dir}/ReleaseNote.txt
+  #        cd $build_dir && git log -1 |tee -a ${images_dir}/ReleaseNote.txt
+  #        cd $images_dir
+  #        for m in $targets; do zip ${m}_${image_suffix}.zip $m.trx ReleaseNote.txt; done
+  #        7z a -mx=9 ${image_name}.7z *.zip
+          
+  #    - name: Upload images to Artifact
+  #      if: ${{ success() }}
+  #      uses: actions/upload-artifact@v2.2.1
+  #      with:
+  #        name: ${{ env.image_name }}
+  #        path: ${{ env.images_dir }}/${{ env.image_name }}.7z
