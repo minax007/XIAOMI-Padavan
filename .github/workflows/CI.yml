@@ -98,7 +98,7 @@ jobs:
           tag_name: ${build_date}
           release_name: Padavan R2100 (${{build_date}})
           body: |
-            Build Date: ${{build_date}}                    
+            Build Date: ${build_date}                    
           draft: false
           prerelease: false
 
