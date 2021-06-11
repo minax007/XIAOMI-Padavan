@@ -96,9 +96,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${build_date}
-          release_name: Padavan R2100 (${build_date})
+          release_name: Padavan R2100 (${{build_date}})
           body: |
-            Build Date: ${build_date}\n                    
+            Build Date: ${{build_date}}                    
           draft: false
           prerelease: false
 
@@ -109,8 +109,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: $images_dir/R2100.trx
-          asset_name: R2100_${build_date}.trx
+          asset_path: ${{images_dir}}/R2100.trx
+          asset_name: R2100_${{build_date}}.trx
           asset_content_type: application/bin
         
           
