@@ -3,10 +3,19 @@
 
 # Latest Padavan firmware for Xiaomi routers
 
-Under releases you can find daily the latest Padavan firmware for the Xiaomi Mi AC2100 (R2100) router from the official repository.
+Daily build of the latest Padavan firmware with the minimum feature set for the following routers: 
+
+# Xiaomi Mi AC2100 (R2100)
 
 ![grafik](https://user-images.githubusercontent.com/67478561/116359547-33a6ca80-a7ff-11eb-8158-67341a4f01b5.png)
 
+# Xiaomi Mi 3C (R3L) 
+
+![grafik](https://user-images.githubusercontent.com/67478561/117842017-d63e5f00-b27d-11eb-879b-911e93848cdb.png)
+
+__________________________________________________________________
+
+In case you need a different feature set or the firmware compiled for a different router than listed in this repository feel free to fork this repsitory and to adjust the CI.yml according to your needs. 
 __________________________________________________________________
 
 Source code: https://github.com/hanwckf/rt-n56u
