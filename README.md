@@ -3,4 +3,8 @@
 
 # Padavan firmware for Xiaomi routers
 
-Latest Padavan build script for Xiaomi Mi AC2100 and Xiaomi Mi-3C
+This GitHub action is to build fresh images of latest Padavan firmware for the Xiaomi Mi AC2100 (R2100) router. 
+
+![grafik](https://user-images.githubusercontent.com/67478561/116359547-33a6ca80-a7ff-11eb-8158-67341a4f01b5.png)
+
+The source code of the build: https://github.com/hanwckf/rt-n56u
