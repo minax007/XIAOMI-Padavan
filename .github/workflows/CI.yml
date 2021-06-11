@@ -124,8 +124,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - build_variant: "mt7628"
-            targets: "MI-3C"
           - build_variant: "mt7621"
             targets: "R2100"
     steps:
@@ -180,23 +178,13 @@ jobs:
           draft: false
           prerelease: false
 
-#      - name: Upload type1 Asset
-#        id: upload-release-asset-type1
-#        uses: actions/upload-release-asset@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          upload_url: ${{ steps.create_release.outputs.upload_url }}
-#          asset_path: /opt/images/R2100.trx
-#          asset_name: R2100_${{ env.build_date }}.trx
-#          asset_content_type: application/bin
-
-      - name: Upload images to Releases
-        if: ${{ github.event_name == 'release' && success() }}
-        uses: svenstaro/upload-release-action@2.2.0
+      - name: Upload R2100
+        id: upload-release-asset-R2100
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ env.images_dir }}/*.trx
-          tag: ${{ github.ref }}
-          overwrite: true
-          file_glob: true
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: /opt/images/R2100.trx
+          asset_name: R2100_${{ env.build_date }}.trx
+          asset_content_type: application/bin
