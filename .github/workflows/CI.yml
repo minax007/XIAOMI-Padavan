@@ -89,29 +89,29 @@ jobs:
           if [ $? = 0 ]; then cp -f images/*.trx $images_dir/$m.trx; else exit 1; fi; \
           ./clear_tree_simple >/dev/null 2>&1; done
           
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${build_date}
-        release_name: Padavan R2100 (${build_date})
-        body: |
-          Build Date: ${build_date}\n                    
-        draft: false
-        prerelease: false
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${build_date}
+          release_name: Padavan R2100 (${build_date})
+          body: |
+            Build Date: ${build_date}\n                    
+          draft: false
+          prerelease: false
 
-    - name: Upload type1 Asset
-      id: upload-release-asset-type1
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-        asset_path: $images_dir/R2100.trx
-        asset_name: R2100_${build_date}.trx
-        asset_content_type: application/bin
+      - name: Upload type1 Asset
+        id: upload-release-asset-type1
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: $images_dir/R2100.trx
+          asset_name: R2100_${build_date}.trx
+          asset_content_type: application/bin
         
           
           
