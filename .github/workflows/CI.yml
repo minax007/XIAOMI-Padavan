@@ -1,4 +1,4 @@
-name: Build Padavan for Xiaomi routers
+name: Build Padavan
 
 # Controls when the action will run. 
 on:
