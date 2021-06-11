@@ -2,11 +2,7 @@ name: Build Padavan for Xiaomi routers
 
 # Controls when the action will run. 
 on:
-  schedule:
-    - cron: "0 2 * * *"
   push:
-    branches:
-      - master
   workflow_dispatch:
 
 env:
