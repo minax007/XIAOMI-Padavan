@@ -175,7 +175,8 @@ jobs:
           release_name: Padavan (${{ env.image_suffix }})
           body: |
             Build Date: ${{ env.build_date }} 
-            Build Version: ${{ GIT_VERSION }}
+            Build Version: echo "${GIT_VERSION}"
+
           draft: false
           prerelease: false
 
