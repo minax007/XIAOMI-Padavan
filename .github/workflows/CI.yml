@@ -189,5 +189,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: /opt/images/R2100.trx
-          asset_name: R2100_${{ env.image_suffix }}.trx
+          asset_name: R2100_${{ env.build_date }}_${{ env.build_version }}.trx
           asset_content_type: application/bin
