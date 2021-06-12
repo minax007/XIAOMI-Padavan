@@ -172,10 +172,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ env.build_date }}
-          release_name: Padavan for Xiaomi (${{ env.build_date }})
+          release_name: Padavan (${{ env.image_suffix }})
           body: |
-            Build Date: ${{ env.build_date }} \n
-            Build Version: ${{ env.image_name }}
+            Build Date: ${{ env.build_date }} 
+            Build Version: ${{ GIT_VERSION }}
           draft: false
           prerelease: false
 
