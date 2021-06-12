@@ -174,7 +174,8 @@ jobs:
           tag_name: ${{ env.build_date }}
           release_name: Padavan for Xiaomi (${{ env.build_date }})
           body: |
-            Build Date: ${{ env.build_date }}
+            Build Date: ${{ env.build_date }} \n
+            Build Version: ${{ env.image_name }}
           draft: false
           prerelease: false
 
