@@ -1,4 +1,4 @@
-name: Build Padavan
+name: Build Padavan Minimal
 
 # Controls when the action will run. 
 on:
@@ -152,9 +152,9 @@ jobs:
         run: |
           cd $build_dir/toolchain-mipsel
           sh dl_toolchain.sh
-      - name: Copy build_firmware_modify to build directory for making the build as lean as possible
-        run: |
-          if [ -d modify ]; then cp -rf modify/* $build_dir/trunk/; fi
+ #     - name: Copy build_firmware_modify to build directory for making the build as lean as possible
+ #       run: |
+ #         if [ -d modify ]; then cp -rf modify/* $build_dir/trunk/; fi
           
       - name: Modify configs
         run: |
